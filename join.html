@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/join.css">
+    <title>Únete - A.R.I.S.E</title>
+</head>
+
+<body>
+    <main>
+        <section class="join">
+            <h1>Solicitar Unión</h1>
+            <form method="POST" id="joinForm">
+                <input type="text" placeholder="👤 Nombre de usuario" name="username" id="username" required>
+                <input type="text" placeholder="📧 Correo electrónico" name="email" id="email" required>
+                <button type="submit">Enviar Datos</button>
+            </form>
+            <p class="alt">
+                Tras enviar tus datos, deberás seguir el proceso de solicitud de unión desde tu correo.
+            </p>
+            <p id="message" class="alt"></p>
+        </section>
+    </main>
+
+    <script>
+        const API_URL = "https://ariseclub.es:433/api/join/request";
+
+        const form = document.getElementById("joinForm");
+        const msg = document.getElementById("message");
+        const submitBtn = form.querySelector("button");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            msg.textContent = "";
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Enviando...";
+
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: username, email }),
+                });
+
+                const data = await res.json();
+                form.reset();
+                setTimeout(() => {
+                    window.location.href = "../index.html";
+                }, 2000);
+
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Unirse";
+            }
+        });
+    </script>
+</body>
+
+
+</html>
+
