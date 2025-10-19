@@ -29,3 +29,4 @@ const observador = new IntersectionObserver((entries)=>{
 })
 
 observador.observe(welcome);
+    
