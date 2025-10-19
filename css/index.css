@@ -1,6 +1,5 @@
 :root {
     --primary-color: #6A0DAD;
-    --background-color: #FFFFFF;
     --secondary-color: #bebebe;
     --dark-gray: #333333;
     --darker-gray: #252525;
@@ -40,6 +39,7 @@ p {
 }
 
 #header {
+    opacity: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -47,6 +47,10 @@ p {
     background-color: #252525;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    transition: ease-in .15s;
+}
+#header.visible {
+    opacity: 1;
 }
 
 .nav-container {
@@ -88,81 +92,6 @@ p {
     font-weight: 600;
 }
 
-aside {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: var(--darker-gray);
-    color: var(--light-gray);
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: width .4s ease-in-out;
-    z-index: 999;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
-    overflow: hidden;
-}
-
-aside.collapsed {
-    width: 80px;
-}
-
-.aside-top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    transition: all .4s ease;
-}
-
-.profile-picture {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px var(--primary-color);
-    cursor: pointer;
-    transition: box-shadow .3s ease;
-}
-
-.profile-picture:hover {
-    box-shadow: 0 0 0 6px var(--primary-color);
-}
-
-.profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.aside-top .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    opacity: 1;
-    transition: opacity .3s ease;
-    white-space: nowrap;
-}
-
-aside.collapsed .user-info {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.user-info .welcome-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-}
-
 .welcome-container h1 {
     font-size: 1.1rem;
     font-weight: 600;
@@ -197,100 +126,6 @@ aside.collapsed .user-info {
 .welcome-buttons .btn:hover {
     background-color: var(--primary-color);
     color: #fff;
-}
-
-.aside-middle {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.aside-middle ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.aside-middle .item-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color .3s ease, transform .3s ease;
-}
-
-.aside-middle .item-container:hover {
-    background-color: var(--dark-gray);
-    transform: translateX(5px);
-}
-
-.aside-middle .item-container.active {
-    background-color: var(--primary-color);
-}
-
-aside.collapsed .aside-middle .item-container {
-    padding: 12px;
-}
-
-aside.collapsed .aside-middle .item-container .item-icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-aside.collapsed .aside-middle .item-container:hover {
-    background-color: var(--dark-gray);
-    transform: none;
-}
-
-.aside-middle .item-container.active::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 80%;
-    background-color: var(--accent-color);
-    border-radius: 5px 0 0 5px;
-}
-
-.aside-middle .item-container i {
-    font-size: 20px;
-    color: var(--light-gray);
-    min-width: 20px;
-    text-align: center;
-}
-
-.aside-middle .item-container p {
-    margin: 0;
-    white-space: nowrap;
-    opacity: 1;
-    transition: opacity .3s ease;
-}
-
-aside.collapsed .aside-middle .item-container p {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.aside-bottom {
-    text-align: center;
-    opacity: 1;
-    transition: opacity .3s ease;
-}
-
-aside.collapsed .aside-bottom {
-    opacity: 0;
-    pointer-events: none;
 }
 
 .arise-logo {
@@ -699,7 +534,7 @@ button:hover {
 
 .activities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     padding: 2rem 0;
     width: 100%;
