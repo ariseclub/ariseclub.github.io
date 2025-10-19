@@ -258,7 +258,7 @@ html {
 }
 
 main {
-    padding: 20px;
+    background-color: var(--dark-gray);
 }
 
 #header {
@@ -309,15 +309,20 @@ main {
     color: #6A0DAD;
     font-weight: 600;
 }
-
+.join-button {
+    width: 400px;
+}
 .welcome-container {
+    position: relative;
     height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    padding-top: 70px;
+    background-color: #252525;
+    margin:auto;
 }
 
 .welcome-content {
@@ -373,11 +378,14 @@ button {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: .15s ease;
 }
 
 button:hover {
     background-color: #8A2BE2;
-    color: #6A0DAD;
+    color: #ffffff;
+    border-color: #222;
+    transition: .15s ease;
 }
 
 .init-container,
@@ -562,7 +570,7 @@ button:hover {
 }
 
 .activity-card p {
-    font-size: 1rem;
+    font-size: 1.10rem;
     color: #555;
     margin: 0;
 }
@@ -570,7 +578,9 @@ button:hover {
 .activity-card:hover {
     transform: translateY(-6px);
     background-color: #8A2BE2;
-    color: #6A0DAD;
+}
+.activity-card:hover p {
+    color: #ffffff;
 }
 
 .footer-container {
