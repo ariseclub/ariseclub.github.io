@@ -1,224 +1,208 @@
-/* ================================================ */
-/* ESTILOS ESPECÍFICOS PARA PÁGINA DE ACTIVIDADES  */
-/* ================================================ */
-
 #header {
-    opacity: 1;
-    visibility: visible;
-    display: block;
+opacity:1;
+visibility:visible;
+display:block
 }
 
 main {
-    min-height: 90vh;
-    display: grid;
-    place-items: center;
-    padding: 6rem 2rem 2rem;
-    background: linear-gradient(135deg, var(--dark-gray) 0%, var(--darker-gray) 100%);
+min-height:90vh;
+display:grid;
+place-items:center;
+padding:6rem 2rem 2rem;
+background:linear-gradient(135deg,var(--dark-gray) 0%,var(--darker-gray) 100%)
 }
 
 .welcome {
-    text-align: center;
-    max-width: 1200px;
-    width: 100%;
+text-align:center;
+max-width:1200px;
+width:100%
 }
 
 .welcome h1 {
-    font-size: 3.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+font-size:3.5rem;
+color:var(--primary-color);
+margin-bottom:1.5rem;
+font-weight:700;
+text-shadow:2px 2px 4px #0000004d
 }
 
 .welcome p {
-    font-size: 1.3rem;
-    color: var(--secondary-color);
-    margin-bottom: 3rem;
-    line-height: 1.6;
+font-size:1.3rem;
+color:var(--secondary-color);
+margin-bottom:3rem;
+line-height:1.6
 }
 
-/* ================================================ */
-/* VENTANAS DE ACTIVIDADES                          */
-/* ================================================ */
 .activities-showcase {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    margin-top: 3rem;
-    padding: 0 1rem;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:2rem;
+width:100%;
+margin-top:3rem;
+padding:0 1rem
 }
 
 .activity-window {
-    background: linear-gradient(145deg, var(--darker-gray), var(--dark-gray));
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(106, 13, 173, 0.2);
-    position: relative;
-    overflow: hidden;
+background:linear-gradient(145deg,var(--darker-gray),var(--dark-gray));
+border-radius:20px;
+padding:2.5rem 2rem;
+box-shadow:0 10px 30px #0006;
+transition:all .3s ease;
+border:1px solid #6a0dad33;
+position:relative;
+overflow:hidden
 }
 
 .activity-window::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
+content:'';
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:4px;
+background:linear-gradient(90deg,var(--primary-color),var(--accent-color));
+transform:scaleX(0);
+transition:transform .3s ease
 }
 
 .activity-window:hover::before {
-    transform: scaleX(1);
+transform:scaleX(1)
 }
 
 .activity-window:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(106, 13, 173, 0.3);
-    border-color: var(--primary-color);
+transform:translateY(-10px);
+box-shadow:0 15px 40px #6a0dad4d;
+border-color:var(--primary-color)
 }
 
 .activity-icon {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    display: block;
+font-size:3rem;
+color:var(--primary-color);
+margin-bottom:1.5rem;
+display:block
 }
 
 .activity-window h3 {
-    font-size: 1.5rem;
-    color: #ffffff;
-    margin-bottom: 1rem;
-    font-weight: 600;
+font-size:1.5rem;
+color:#fff;
+margin-bottom:1rem;
+font-weight:600
 }
 
 .activity-window p {
-    font-size: 1rem;
-    color: var(--light-gray);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+font-size:1rem;
+color:var(--light-gray);
+line-height:1.6;
+margin-bottom:1.5rem
 }
 
 .activity-date {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent-color);
-    font-size: 0.9rem;
-    margin-top: 1rem;
+display:flex;
+align-items:center;
+gap:.5rem;
+color:var(--accent-color);
+font-size:.9rem;
+margin-top:1rem
 }
 
 .activity-status {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-top: 1rem;
+display:inline-block;
+padding:.4rem 1rem;
+border-radius:20px;
+font-size:.85rem;
+font-weight:600;
+margin-top:1rem
 }
 
 .status-active {
-    background-color: rgba(46, 204, 113, 0.2);
-    color: #2ecc71;
-    border: 1px solid #2ecc71;
+background-color:#2ecc7133;
+color:#2ecc71;
+border:1px solid #2ecc71
 }
 
 .status-upcoming {
-    background-color: rgba(241, 196, 15, 0.2);
-    color: #f1c40f;
-    border: 1px solid #f1c40f;
+background-color:#f1c40f33;
+color:#f1c40f;
+border:1px solid #f1c40f
 }
 
 .status-completed {
-    background-color: rgba(149, 165, 166, 0.2);
-    color: #95a5a6;
-    border: 1px solid #95a5a6;
+background-color:#95a5a633;
+color:#95a5a6;
+border:1px solid #95a5a6
 }
 
-/* ================================================ */
-/* RESPONSIVE - TABLETS                             */
-/* ================================================ */
 @media (max-width: 1024px) {
-    .welcome h1 {
-        font-size: 3rem;
-    }
-
-    .welcome p {
-        font-size: 1.2rem;
-    }
-
-    .activities-showcase {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
+.welcome h1 {
+font-size:3rem
 }
 
-/* ================================================ */
-/* RESPONSIVE - MÓVIL                               */
-/* ================================================ */
+.welcome p {
+font-size:1.2rem
+}
+
+.activities-showcase {
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:1.5rem
+}
+}
+
 @media (max-width: 768px) {
-    main {
-        padding: 5rem 1rem 2rem;
-    }
-
-    .welcome h1 {
-        font-size: 2.5rem;
-    }
-
-    .welcome p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .activities-showcase {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .activity-window {
-        padding: 2rem 1.5rem;
-    }
-
-    .activity-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .activity-window h3 {
-        font-size: 1.3rem;
-    }
-
-    .activity-window p {
-        font-size: 0.95rem;
-    }
+main {
+padding:5rem 1rem 2rem
 }
 
-/* ================================================ */
-/* RESPONSIVE - MÓVIL PEQUEÑO                       */
-/* ================================================ */
+.welcome h1 {
+font-size:2.5rem
+}
+
+.welcome p {
+font-size:1.1rem;
+margin-bottom:2rem
+}
+
+.activities-showcase {
+grid-template-columns:1fr;
+gap:1.5rem;
+margin-top:2rem
+}
+
+.activity-window {
+padding:2rem 1.5rem
+}
+
+.activity-icon {
+font-size:2.5rem;
+margin-bottom:1rem
+}
+
+.activity-window h3 {
+font-size:1.3rem
+}
+
+.activity-window p {
+font-size:.95rem
+}
+}
+
 @media (max-width: 480px) {
-    .welcome h1 {
-        font-size: 2rem;
-    }
+.welcome h1 {
+font-size:2rem
+}
 
-    .welcome p {
-        font-size: 1rem;
-    }
+.welcome p {
+font-size:1rem
+}
 
-    .activity-window {
-        padding: 1.5rem 1rem;
-    }
+.activity-window {
+padding:1.5rem 1rem
+}
 
-    .activity-icon {
-        font-size: 2rem;
-    }
+.activity-icon {
+font-size:2rem
+}
 
-    .activity-window h3 {
-        font-size: 1.2rem;
-    }
+.activity-window h3 {
+font-size:1.2rem
+}
 }
