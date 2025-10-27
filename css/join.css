@@ -9,7 +9,7 @@ display:grid;
 place-items:center;
 height:100vh;
 margin:0;
-background-color:#1e1e1e
+background-color:#353535;
 }
 
 main {
@@ -99,3 +99,4 @@ font-weight:500
 .alt a:hover {
 text-decoration:underline
 }
+
