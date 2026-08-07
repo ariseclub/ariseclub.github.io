@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/meeting.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <title>Reuniones - A.R.I.S.E</title>
+  </head>
+  <body>
+    <header id="header">
+      <nav class="nav-container">
+        <div class="logo">
+          <h1>A.R.I.S.E</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="./index.html#init">Inicio</a></li>
+          <li><a href="./index.html#about-us">Sobre Nosotros</a></li>
+          <li><a href="./index.html#activity">Actividades</a></li>
+          <li><a href="#footer">Contacto</a></li>
+          <li><a href="/join" class="btn-join">Únete</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="meeting-page">
+        <div class="meeting-hero">
+          <h1>Reuniones</h1>
+          <p>Lista viva de reuniones del club con fecha, estado y tema principal.</p>
+        </div>
+        <ul class="meeting-list">
+          <li class="meeting-entry" data-date="2026-09-07" data-state="past">
+            <div class="meeting-date"><span class="meeting-month">Sep</span><strong>07</strong><span class="meeting-year">2026</span></div>
+            <div class="meeting-body">
+              <div class="meeting-topline">
+                <h2>Welcome Day!</h2>
+                <span class="meeting-status">Pendiente</span>
+              </div>
+              <p>Welcome Day UCJC! Tendremos un stand en el campus de Villafranca.</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer-container" id="footer">
+      <div class="footer-content">
+        <div class="footer-section footer-logo">
+          <div class="logo-group"><img src="./img/arise.png" alt="Arise Logo"><img src="./img/ariseucjc.png" alt="Arise Logo"></div>
+          <p>Advanced Robotics Informatics Science and Engineering</p>
+        </div>
+        <div class="footer-section">
+          <h3>Navegación</h3>
+          <ul>
+            <li><a href="./index.html#init">Inicio</a></li>
+            <li><a href="./index.html#about-us">Sobre Nosotros</a></li>
+            <li><a href="./index.html#activity">Actividades</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contacto</h3>
+          <p><i class="fa-solid fa-envelope"></i><a href="mailto:grupo.arise@ucjc.edu">grupo.arise@ucjc.edu</a></p>
+          <p><i class="fa-solid fa-location-dot"></i><a href="https://www.google.com/maps/search/?api=1&query=C.+de+Juan+Hurtado+de+Mendoza,+4,+Madrid" target="_blank">C. de Juan Hurtado de Mendoza, 4, Madrid</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Síguenos</h3>
+          <div class="social-icons"><a href="https://chat.whatsapp.com/Fmw0Ku8y5hR3xY05tr7rLD" target="_blank"><i class="fa-brands fa-whatsapp"></i></a><a href="https://discord.gg/tuP7kjzKbM" target="_blank"><i class="fa-brands fa-discord"></i></a><a href="https://www.instagram.com/arise.ucjc/" target="_blank"><i class="fa-brands fa-instagram"></i></a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 A.R.I.S.E. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/2b7f4aa298.js" crossorigin="anonymous"></script>
+    <script>
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      document.querySelectorAll('.meeting-entry').forEach((entry) => {
+        const status = entry.querySelector('.meeting-status');
+        const state = entry.dataset.state || 'scheduled';
+        const meetingDate = new Date(`${entry.dataset.date}T00:00:00`);
+      
+        entry.classList.remove('status-past', 'status-future', 'status-canceled');
+      
+        if (state === 'canceled') {
+          entry.classList.add('status-canceled');
+          status.textContent = 'Cancelada';
+          return;
+        }
+      
+        if (meetingDate < today) {
+          entry.classList.add('status-past');
+          status.textContent = 'Pasada';
+          return;
+        }
+      
+        entry.classList.add('status-future');
+        status.textContent = 'Próxima';
+      });
+    </script>
+  </body>
+</html>

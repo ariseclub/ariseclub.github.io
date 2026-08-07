@@ -1,0 +1,43 @@
+#header { opacity: 1; visibility: visible; display: block; }
+main { min-height: 90vh; display: grid; place-items: center; padding: 6rem 2rem 2rem; background: radial-gradient(circle at top left,#6a0dad33 0,transparent 32%), radial-gradient(circle at bottom right,#ff8c4233 0,transparent 30%), linear-gradient(135deg,var(--dark-#808080) 0,var(--darker-#808080) 100%); }
+.welcome { text-align: center; max-width: 1200px; width: 100%; }
+.welcome h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 1.5rem; font-weight: 700; text-shadow: 2px 2px 4px #0000004d; }
+.welcome p { font-size: 1.3rem; color: var(--secondary-color); margin-bottom: 3rem; line-height: 1.6; }
+.activities-showcase { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 2rem; width: 100%; margin-top: 3rem; padding: 0 1rem; align-items: stretch; }
+.activities-showcase > a { display: block; height: 100%; color: inherit; text-decoration: none; }
+.activity-window { height: 100%; display: flex; flex-direction: column; background: linear-gradient(160deg,rgba(50,48,56,.92),rgba(28,26,32,.97)); border-radius: 22px; padding: 2.5rem 2rem; box-shadow: 0 14px 35px #0006; transition: transform .3s ease,box-shadow .3s ease,border-color .3s ease; border: 1px solid #ffffff14; position: relative; overflow: hidden; backdrop-filter: blur(8px); }
+.activity-window::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,#6a0dad1f,transparent 35%,#ff8c421a 100%); opacity: .85; pointer-events: none; }
+.activity-window::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg,var(--primary-color),var(--accent-color)); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+.activity-window:hover::after { transform: scaleX(1); }
+.activity-window:hover { transform: translateY(-10px); box-shadow: 0 18px 45px #6a0dad52,0 0 0 1px #ff8c4230 inset; border-color: #fff3; }
+.activity-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 1.25rem; display: block; position: relative; z-index: 1; }
+.activity-window h3 { font-size: 1.5rem; color: #f3eee8; margin-bottom: 1rem; font-weight: 600; position: relative; z-index: 1; }
+.activity-window p { font-size: 1rem; color: var(--light-#808080); line-height: 1.6; margin-bottom: 1.5rem; position: relative; z-index: 1; min-height: 9.6em; overflow-wrap: anywhere; display: block; overflow: visible; min-height: 0; }
+.activity-date { display: flex; align-items: center; gap: .5rem; color: var(--accent-color); font-size: .9rem; margin-top: auto; position: relative; z-index: 1; }
+.activity-status { display: inline-flex; align-self: flex-start; padding: .4rem 1rem; border-radius: 999px; font-size: .85rem; font-weight: 600; margin-top: 1rem; position: relative; z-index: 1; letter-spacing: .02em; }
+.status-active { background-color: #2ecc7133; color: #2ecc71; border: 1px solid #2ecc71; }
+.status-upcoming { background-color: #f1c40f33; color: #f1c40f; border: 1px solid #f1c40f; }
+.status-completed { background-color: #95a5a633; color: #95a5a6; border: 1px solid #95a5a6; }
+.status-paused { background-color: #ff8c4233; color: #ffb37b; border: 1px solid #ff8c42; }
+@media (max-width: 1024px) {
+  .welcome h1 { font-size: 3rem; }
+  .welcome p { font-size: 1.2rem; }
+  .activities-showcase { grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; }
+}
+@media (max-width: 768px) {
+  main { padding: 5rem 1rem 2rem; }
+  .welcome h1 { font-size: 2.5rem; }
+  .welcome p { font-size: 1.1rem; margin-bottom: 2rem; }
+  .activities-showcase { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .activity-window { padding: 2rem 1.5rem; min-height: unset; }
+  .activity-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .activity-window h3 { font-size: 1.3rem; }
+  .activity-window p { font-size: .95rem; -webkit-line-clamp: 7; min-height: 0; }
+}
+@media (max-width: 480px) {
+  .welcome h1 { font-size: 2rem; }
+  .welcome p { font-size: 1rem; }
+  .activity-window { padding: 1.5rem 1rem; }
+  .activity-icon { font-size: 2rem; }
+  .activity-window h3 { font-size: 1.2rem; }
+}

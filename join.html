@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/join.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <title>Únete - A.R.I.S.E</title>
+  </head>
+  <body>
+    <main>
+      <section class="join" aria-labelledby="join-title">
+        <p class="eyebrow">A.R.I.S.E Club</p>
+        <h1 id="join-title">Solicitar Unión</h1>
+        <p class="lead">Entra con tu cuenta para enviar tu solicitud de acceso de forma rápida y segura.</p>
+        <div class="auth-card"><button id="googleBtn" type="button">Continuar con Google</button><button id="microsoftBtn" type="button">Continuar con Microsoft</button></div>
+      </section>
+    </main>
+    <script type="module">
+      import {
+        initializeApp
+      }
+      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+      import {
+        getAuth,
+        GoogleAuthProvider,
+        OAuthProvider,
+        signInWithPopup
+      }
+      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        serverTimestamp
+      }
+      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+      
+      const app = initializeApp({
+        apiKey: "AIzaSyAdRctmMezyRBFVJBYZ8jufDqRmyARk790",
+        authDomain: "arise-a3be8.firebaseapp.com",
+        projectId: "arise-a3be8",
+        storageBucket: "arise-a3be8.firebasestorage.app",
+        messagingSenderId: "454589771976",
+        appId: "1:454589771976:web:bebcc57c4b569e3974b5fd"
+      });
+      
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      
+      const logger = {
+        info: (msg, data) => console.log(`[INFO] ${msg}`, data || ''),
+        success: (msg, data) => console.log(`[SUCCESS] ✅ ${msg}`, data || ''),
+        error: (msg, data) => console.error(`[ERROR] ❌ ${msg}`, data || ''),
+        auth: (msg, data) => console.log(`[AUTH] 🔐 ${msg}`, data || ''),
+        firestore: (msg, data) => console.log(`[FIRESTORE] 📁 ${msg}`, data || '')
+      };
+      
+      function createProvider(type) {
+        logger.info(`Creando proveedor de autenticación: ${type}`);
+        if (type === "google") {
+          const p = new GoogleAuthProvider();
+          p.addScope("email");
+          p.addScope("profile");
+          p.setCustomParameters({
+            prompt: "select_account"
+          });
+          return p;
+        }
+        const p = new OAuthProvider("microsoft.com");
+        p.addScope("email");
+        p.addScope("openid");
+        p.addScope("profile");
+        p.setCustomParameters({
+          prompt: "select_account"
+        });
+        return p;
+      }
+      
+      async function handleAuth(button, type) {
+        logger.auth(`Iniciando autenticación con ${type}`);
+        button.disabled = true;
+        
+        try {
+          logger.info(`Intentando signInWithPopup para ${type}`);
+          const result = await signInWithPopup(auth, createProvider(type));
+          const user = result.user;
+          logger.auth(`Usuario autenticado: ${user.uid}`, { 
+            provider: result.providerId,
+            email: user.email || 'No disponible'
+          });
+      
+          const provider = user.providerData.find(x => x.providerId === result.providerId) || user.providerData[0];
+      
+          const email = ((provider && provider.email) || user.email || "").trim().toLowerCase();
+          const name = ((provider && provider.displayName) || user.displayName || "").trim();
+          
+          logger.info(`Datos del usuario procesados`, { 
+            email, 
+            name, 
+            providerId: result.providerId 
+          });
+      
+          if (!email) {
+            logger.error('Email no disponible');
+            throw new Error("No se pudo obtener el correo electrónico.");
+          }
+      
+          const docRef = doc(db, "tempusers", email);
+          const data = {
+            name: name,
+            joined_at: serverTimestamp()
+          };
+          
+          logger.firestore(`Escribiendo en Firestore: tempusers/${email}`, data);
+          
+          await setDoc(docRef, data, { merge: true });
+          
+          logger.success(`Documento guardado exitosamente en tempusers/${email}`);
+          logger.info(`Redirigiendo a index.html`);
+          
+          window.location.href = "./index.html";
+        } catch (e) {
+          logger.error(`Error en autenticación con ${type}`, {
+            message: e.message,
+            code: e.code || 'unknown',
+            stack: e.stack
+          });
+          
+          button.disabled = false;
+          console.error(`[ERROR] ${e.message || "No se pudo iniciar sesión."}`);
+        }
+      }
+      
+      document.getElementById("googleBtn").addEventListener("click", function() {
+        logger.info('Click en botón Google');
+        handleAuth(this, "google");
+      });
+      
+      document.getElementById("microsoftBtn").addEventListener("click", function() {
+        logger.info('Click en botón Microsoft');
+        handleAuth(this, "microsoft");
+      });
+      
+      logger.info('Aplicación inicializada correctamente');
+    </script>
+  </body>
+</html>
