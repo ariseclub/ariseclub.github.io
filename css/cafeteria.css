@@ -1,0 +1,28 @@
+.hero { margin-bottom: 22px; }
+.hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.hero-top .eyebrow { margin: 0; }
+.hero h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+.hero h1::first-letter { text-transform: uppercase; }
+.dish-card { position: relative; overflow: hidden; padding: clamp(24px, 5vw, 40px); border-radius: 28px; background: linear-gradient(180deg, rgba(36, 36, 38, 0.96), rgba(22, 22, 24, 0.98)); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.dish-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--gradient); }
+.dish-card::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 70%); pointer-events: none; }
+.dish-card h2 { position: relative; font-size: clamp(1.5rem, 4.5vw, 2.25rem); font-weight: 600; line-height: 1.2; color: #fff; }
+.extras { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; margin-top: 14px; }
+.extra { padding: 18px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+.extra p { margin: 0; font-size: 1rem; }
+.extra--price p { font-family: var(--font-primary); font-size: 1.6rem; font-weight: 700; color: var(--orange); }
+.festivo-card { padding: clamp(28px, 6vw, 48px) 24px; border-radius: 28px; text-align: center; background: linear-gradient(180deg, rgba(36, 36, 38, 0.96), rgba(22, 22, 24, 0.98)); border: 1px dashed var(--border-strong); }
+.festivo-card svg { width: 48px; height: 48px; color: var(--violet); margin-bottom: 12px; }
+.festivo-card h2 { font-size: 1.5rem; margin-bottom: 6px; }
+.festivo-card p { margin: 0 auto; max-width: 36ch; color: var(--muted); }
+@media (max-width: 640px) {
+  .hero { margin-bottom: 16px; }
+  .hero h1 { font-size: 1.55rem; }
+  .dish-card { padding: 22px 20px 24px; border-radius: 22px; }
+  .dish-card h2 { font-size: 1.45rem; }
+  .extras { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .extras .extra:first-child { grid-column: 1 / -1; }
+  .extra { padding: 14px 16px; border-radius: 18px; }
+  .extra--price p { font-size: 1.35rem; }
+  .festivo-card { border-radius: 22px; }
+}

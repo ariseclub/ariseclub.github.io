@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="A.R.I.S.E, club de robótica, informática, ciencia e ingeniería de la UCJC: talleres, reuniones, menú de la cafetería y mapa del campus.">
+    <meta name="theme-color" content="#1f1f1f">
+    <title>A.R.I.S.E</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Questrial&display=swap">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body class="home">
+    <header id="header">
+      <nav class="nav-container" aria-label="Principal">
+        <a class="logo" href="index.html"><img src="img/arise.png" alt="" width="38" height="38"><span>A.R.I.S.E</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" aria-current="page">Inicio</a></li>
+          <li><a href="index.html#about-us">Sobre nosotros</a></li>
+          <li><a href="ateliers.html">Talleres</a></li>
+          <li><a href="meetings.html">Reuniones</a></li>
+          <li><a href="cafeteria.html">Cafetería</a></li>
+          <li><a href="mapa.html">Mapa</a></li>
+          <li><a href="join.html" class="btn-join">Únete</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-inner">
+          <div class="hero-text reveal">
+            <p class="hero-kicker">Club de la Universidad Camilo José Cela</p>
+            <h1>A.R.I.S.E</h1>
+            <p class="hero-name">Advanced Robotics Informatics Science and Engineering</p>
+            <p class="hero-lead">Explora, aprende e innova con nosotros. Te conectamos con la tecnología, la programación y la robótica con proyectos que marcan la diferencia.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="join.html">Únete al club</a>
+              <a class="btn btn-ghost" href="ateliers.html">Ver talleres</a>
+            </div>
+          </div>
+          <div class="hero-logo reveal">
+            <img src="img/arise.png" alt="Logo de A.R.I.S.E" width="420" height="420">
+          </div>
+        </div>
+      </section>
+      <section class="section" id="ahora" aria-labelledby="ahora-title">
+        <div class="section-inner">
+          <div class="section-head reveal">
+            <h2 id="ahora-title">Ahora en el club</h2>
+            <p>Lo último de los talleres, las reuniones, la cafetería y el campus.</p>
+          </div>
+          <div class="bento">
+            <a class="tile tile-meeting reveal" href="meetings.html">
+              <span class="tile-label"><i class="fa-solid fa-users" aria-hidden="true"></i> Reuniones</span>
+              <span class="tile-date" id="homeMeetingDate"></span>
+              <strong class="tile-title" id="homeMeeting">Consulta las reuniones del club</strong>
+              <span class="tile-text" id="homeMeetingText"></span>
+              <span class="tile-more">Ver todas <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="tile tile-atelier reveal" href="ateliers.html">
+              <span class="tile-label"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i> Talleres</span>
+              <strong class="tile-title" id="homeAtelier">Nuestros talleres y proyectos</strong>
+              <span class="tile-more">Ver talleres <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="tile tile-canteen reveal" href="cafeteria.html">
+              <span class="tile-label"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Cafetería</span>
+              <strong class="tile-title" id="homeCanteen">El plato del día</strong>
+              <span class="tile-text" id="homeCanteenText">Menú de lunes a viernes</span>
+              <span class="tile-more">Ver menú <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="tile tile-map reveal" href="mapa.html">
+              <span class="tile-label"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Mapa</span>
+              <strong class="tile-title">Qué hay cerca del campus</strong>
+              <span class="tile-text">Restaurantes, transporte, parkings y servicios.</span>
+              <span class="tile-more">Abrir mapa <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="section section-alt" id="about-us" aria-labelledby="about-title">
+        <div class="section-inner about">
+          <div class="about-text reveal">
+            <h2 id="about-title">Sobre nosotros</h2>
+            <p>A.R.I.S.E es un club dedicado al desarrollo tecnológico y a la creación de soluciones innovadoras para los desafíos de la universidad, donde cada miembro tiene la oportunidad de aportar ideas, colaborar y aprender continuamente en un entorno de crecimiento conjunto.</p>
+          </div>
+          <ul class="team">
+            <li class="member reveal"><img src="img/rodrigoc.jpg" alt="" width="240" height="240" loading="lazy"><div><h3>Rodrigo Caminero Gonzalez</h3><p>Presidente</p></div></li>
+            <li class="member reveal"><img src="img/alex.jpg" alt="" width="240" height="240" loading="lazy"><div><h3>Alejandro Nieto Aguilar</h3><p>Vicepresidente</p></div></li>
+            <li class="member reveal"><img src="img/raul.jpg" alt="" width="240" height="240" loading="lazy"><div><h3>Raul Clavo Diaz</h3><p>Desarrollador de Productos y Datos</p></div></li>
+            <li class="member reveal"><img src="img/default.png" alt="" width="240" height="240" loading="lazy"><div><h3>Juan Cruz Romero Cipolla</h3><p>Tesorero</p></div></li>
+            <li class="member reveal"><img src="img/rodrigom.jpg" alt="" width="240" height="240" loading="lazy"><div><h3>Rodrigo Moreno Menéndez</h3><p>Secretario General</p></div></li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="activity" aria-labelledby="activity-title">
+        <div class="section-inner">
+          <div class="section-head reveal">
+            <h2 id="activity-title">Qué hacemos</h2>
+            <p>Las actividades que organizamos durante el curso.</p>
+          </div>
+          <ul class="activities">
+            <li class="activity reveal"><i class="fa-solid fa-users" aria-hidden="true"></i><div><h3>Reuniones semanales</h3><p>Encuentros para compartir ideas, planear proyectos y mantenernos conectados como comunidad.</p></div></li>
+            <li class="activity reveal"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><div><h3>Talleres de proyectos</h3><p>Clases prácticas y sesiones de desarrollo donde aprendes y aplicas nuevas habilidades.</p></div></li>
+            <li class="activity reveal"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i><div><h3>Charlas y conferencias</h3><p>Invitamos a expertos y miembros para inspirar, motivar y abrir nuevas perspectivas.</p></div></li>
+            <li class="activity reveal"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><div><h3>Excursiones y viajes</h3><p>Salidas fuera del club para aprender de forma práctica y divertida en otros entornos.</p></div></li>
+          </ul>
+        </div>
+      </section>
+      <section class="cta" aria-labelledby="cta-title">
+        <div class="cta-inner reveal">
+          <h2 id="cta-title">¿A qué estás esperando?</h2>
+          <p>Entra con tu cuenta de la universidad y envía tu solicitud en un minuto.</p>
+          <a class="btn btn-light" href="join.html">Únete a A.R.I.S.E</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer" id="footer">
+      <div class="footer-inner">
+        <div class="footer-main">
+          <a class="footer-brand" href="index.html"><img src="img/arise.png" alt="" width="44" height="44"><span><strong>A.R.I.S.E</strong><small>El club de tecnología de la UCJC</small></span></a>
+          <nav class="footer-nav" aria-label="Pie de página">
+            <a href="ateliers.html">Talleres</a>
+            <a href="meetings.html">Reuniones</a>
+            <a href="cafeteria.html">Cafetería</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="join.html">Únete</a>
+          </nav>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/arise.ucjc/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://discord.gg/tuP7kjzKbM" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+            <a href="https://chat.whatsapp.com/Fmw0Ku8y5hR3xY05tr7rLD" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="mailto:grupo.arise@ucjc.edu" aria-label="Correo: grupo.arise@ucjc.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 A.R.I.S.E · Universidad Camilo José Cela</span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=C.+de+Juan+Hurtado+de+Mendoza,+4,+Madrid" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> C. de Juan Hurtado de Mendoza, 4, Madrid</a>
+          <a href="#">Volver arriba <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/2b7f4aa298.js" crossorigin="anonymous"></script>
+    <script src="js/reveal.js"></script>
+    <script type="module" src="js/nav.js"></script>
+    <script type="module" src="js/index.js"></script>
+  </body>
+</html>

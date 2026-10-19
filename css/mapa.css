@@ -1,0 +1,38 @@
+body.map-page { height: 100vh; height: 100dvh; overflow: hidden; }
+.map-page #map { position: fixed; top: var(--header-h); right: 0; bottom: 0; left: 336px; transition: left .25s ease; background: #171719; }
+.map-page #sidebar { position: fixed; top: calc(var(--header-h) + 16px); bottom: 16px; left: 16px; width: 304px; z-index: 500; transition: transform .25s ease,opacity .2s ease; }
+.map-page.sidebar-collapsed #sidebar { transform: translateX(-120%); opacity: 0; pointer-events: none; }
+.map-page.sidebar-collapsed #map { left: 0; }
+.map-sidebar { display: flex; flex-direction: column; min-height: 0; padding: 18px; border-radius: var(--radius); background: #232326f2; border: 1px solid var(--border); box-shadow: 0 8px 30px #00000066; }
+.map-sidebar h1 { font-size: 1.25rem; color: #fff; margin-bottom: .25rem; }
+.map-sidebar .map-switch { display: inline-block; margin-bottom: .75rem; color: var(--lilac); font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; }
+.map-search { width: 100%; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; border: 1px solid var(--border-strong); background: #00000040; color: var(--text); font: inherit; }
+.map-search:focus { outline: none; border-color: var(--violet); box-shadow: 0 0 0 3px #a855f740; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.chip { padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font: inherit; font-size: .85rem; cursor: pointer; transition: background-color .2s ease; }
+.chip:hover { background: var(--surface-hover); }
+.chip.active { background: var(--primary-color); border-color: var(--accent-color); color: #fff; }
+.chip-dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 50%; vertical-align: middle; }
+.places-list { list-style: none; overflow: auto; min-height: 0; padding-right: 6px; scrollbar-width: thin; scrollbar-color: var(--violet) transparent; }
+.places-list li { margin-bottom: 8px; }
+.place-item { display: block; width: 100%; padding: 10px 12px; border-radius: 12px; background: #0000002e; border: 1px solid transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: background-color .2s ease,border-color .2s ease; }
+.place-item:hover, .place-item.is-active { background: var(--surface-hover); border-color: var(--border-strong); }
+.place-title { display: block; font-weight: 600; color: #fff; }
+.place-desc { display: block; margin-top: 4px; font-size: .85rem; color: #eaeff7cc; }
+.go-link { display: inline-block; margin-top: 6px; padding: 4px 10px; border-radius: 999px; font-size: .8rem; color: var(--text); background: #6a0dad40; border: 1px solid var(--accent-color); transition: background-color .2s ease; }
+.go-link:hover { background: var(--accent-color); color: #fff; }
+.map-empty { color: var(--muted); font-size: .9rem; padding: .5rem 0; }
+.marker-pin { position: relative; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 2px solid #000000a6; box-shadow: 0 4px 10px #00000080; }
+.marker-inner { position: absolute; top: 50%; left: 50%; width: 40%; height: 40%; border-radius: 50%; background: #ffffffe6; transform: translate(-50%,-50%) rotate(45deg); }
+.marker-draft .marker-pin { outline: 3px solid #fff; outline-offset: 2px; }
+.leaflet-container { font-family: var(--font-secondary); background: #171719; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: #232326; color: var(--text); }
+.leaflet-popup-content a { color: var(--lilac); }
+.leaflet-bar a, .leaflet-bar a:hover { background: #232326; color: #fff; border-bottom-color: #ffffff1f; }
+.leaflet-bar a.active-floor { background: var(--primary-color); color: #fff; }
+@media (max-width: 900px) {
+  .map-page #sidebar { top: calc(var(--header-h) + 8px); left: 8px; right: 8px; bottom: auto; width: auto; height: 42%; }
+  .map-page #map { left: 0; top: calc(var(--header-h) + 42% + 16px); }
+  .map-page.sidebar-collapsed #sidebar { transform: translateY(-130%); }
+  .map-page.sidebar-collapsed #map { top: var(--header-h); }
+}

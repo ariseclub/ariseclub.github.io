@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="El plato del día de la cafetería del campus de la UCJC, de lunes a viernes.">
+    <meta name="theme-color" content="#1f1f1f">
+    <title>Cafetería - A.R.I.S.E</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Questrial&display=swap">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/cafeteria.css">
+  </head>
+  <body>
+    <header id="header">
+      <nav class="nav-container" aria-label="Principal">
+        <a class="logo" href="index.html"><img src="img/arise.png" alt="" width="38" height="38"><span>A.R.I.S.E</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#about-us">Sobre nosotros</a></li>
+          <li><a href="ateliers.html">Talleres</a></li>
+          <li><a href="meetings.html">Reuniones</a></li>
+          <li><a href="cafeteria.html" aria-current="page">Cafetería</a></li>
+          <li><a href="mapa.html">Mapa</a></li>
+          <li><a href="join.html" class="btn-join">Únete</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="page app">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-top">
+            <p class="eyebrow">Menú del día · Cafetería</p>
+            <button id="todayBtn" type="button" class="btn-secondary btn-small">Hoy</button>
+          </div>
+          <h1 id="dateLabel"></h1>
+        </div>
+        <nav class="week-nav" aria-label="Días de la semana">
+          <button id="prevWeek" type="button" class="icon-btn" aria-label="Semana anterior">‹</button>
+          <div id="weekDays" class="week-days"></div>
+          <button id="nextWeek" type="button" class="icon-btn" aria-label="Semana siguiente">›</button>
+        </nav>
+        <p id="status" class="status" role="status">Cargando menú…</p>
+        <section id="menu" hidden>
+          <article class="dish-card">
+            <span class="label">Plato del día</span>
+            <h2 id="plato"></h2>
+          </article>
+          <div class="extras">
+            <article class="extra">
+              <span class="label">Postre</span>
+              <p id="postre"></p>
+            </article>
+            <article class="extra">
+              <span class="label">Incluye</span>
+              <p>Pan</p>
+            </article>
+            <article class="extra extra--price">
+              <span class="label">Precio</span>
+              <p id="price"></p>
+            </article>
+          </div>
+        </section>
+        <section id="festivo" class="festivo-card" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4.5" width="18" height="16" rx="3" />
+            <path d="M3 9.5h18M8 2.5v4M16 2.5v4M9.5 13.5l5 5M14.5 13.5l-5 5" />
+          </svg>
+          <h2>Día festivo</h2>
+          <p>Este día es festivo y la universidad no está abierta.</p>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer" id="footer">
+      <div class="footer-inner">
+        <div class="footer-main">
+          <a class="footer-brand" href="index.html"><img src="img/arise.png" alt="" width="44" height="44"><span><strong>A.R.I.S.E</strong><small>El club de tecnología de la UCJC</small></span></a>
+          <nav class="footer-nav" aria-label="Pie de página">
+            <a href="ateliers.html">Talleres</a>
+            <a href="meetings.html">Reuniones</a>
+            <a href="cafeteria.html">Cafetería</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="join.html">Únete</a>
+          </nav>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/arise.ucjc/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://discord.gg/tuP7kjzKbM" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+            <a href="https://chat.whatsapp.com/Fmw0Ku8y5hR3xY05tr7rLD" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="mailto:grupo.arise@ucjc.edu" aria-label="Correo: grupo.arise@ucjc.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 A.R.I.S.E · Universidad Camilo José Cela</span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=C.+de+Juan+Hurtado+de+Mendoza,+4,+Madrid" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> C. de Juan Hurtado de Mendoza, 4, Madrid</a>
+          <a href="#">Volver arriba <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/2b7f4aa298.js" crossorigin="anonymous"></script>
+    <script type="module" src="js/nav.js"></script>
+    <script type="module" src="js/cafeteria.js"></script>
+  </body>
+</html>

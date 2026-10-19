@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Mapa interactivo de los alrededores del campus de la UCJC en la Castellana.">
+    <meta name="theme-color" content="#1f1f1f">
+    <title>Mapa - A.R.I.S.E</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Questrial&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/mapa.css">
+  </head>
+  <body class="map-page" data-mapa="externo">
+    <header id="header">
+      <nav class="nav-container" aria-label="Principal">
+        <a class="logo" href="index.html"><img src="img/arise.png" alt="" width="38" height="38"><span>A.R.I.S.E</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#about-us">Sobre nosotros</a></li>
+          <li><a href="ateliers.html">Talleres</a></li>
+          <li><a href="meetings.html">Reuniones</a></li>
+          <li><a href="cafeteria.html">Cafetería</a></li>
+          <li><a href="mapa.html" aria-current="page">Mapa</a></li>
+          <li><a href="join.html" class="btn-join">Únete</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <aside id="sidebar" class="map-sidebar" aria-label="Lugares">
+        <h1>Alrededores del campus</h1>
+        <input id="search" class="map-search" type="search" placeholder="Buscar lugar…" aria-label="Buscar lugar">
+        <div id="filters" class="filters" aria-label="Categorías"></div>
+        <ul id="places-list" class="places-list"></ul>
+      </aside>
+      <div id="map" role="region" aria-label="Mapa"></div>
+    </main>
+    <script src="https://kit.fontawesome.com/2b7f4aa298.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="js/nav.js"></script>
+    <script type="module" src="js/mapa.js"></script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#1f1f1f">
+    <title>Gestión - A.R.I.S.E</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Questrial&display=swap">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/gestion.css">
+  </head>
+  <body>
+    <header id="header">
+      <nav class="nav-container" aria-label="Principal">
+        <a class="logo" href="index.html"><img src="img/arise.png" alt="" width="38" height="38"><span>A.R.I.S.E</span></a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#about-us">Sobre nosotros</a></li>
+          <li><a href="ateliers.html">Talleres</a></li>
+          <li><a href="meetings.html">Reuniones</a></li>
+          <li><a href="cafeteria.html">Cafetería</a></li>
+          <li><a href="mapa.html">Mapa</a></li>
+          <li><a href="join.html" class="btn-join">Únete</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="page app login-page">
+      <section class="login-card" aria-labelledby="login-title">
+        <img class="logo" src="img/arise.png" alt="" width="170" height="170">
+        <h1 id="login-title">Gestión de A.R.I.S.E</h1>
+        <p class="lead">Entra con tu cuenta autorizada para gestionar la cafetería, los talleres, las reuniones y el mapa.</p>
+        <div class="auth-card"><button id="googleBtn" type="button">Continuar con Google</button><button id="microsoftBtn" type="button">Continuar con Microsoft</button></div>
+        <p id="loginMsg" class="msg" role="alert"></p>
+        <a class="back-link" href="index.html">Volver a la web</a>
+      </section>
+    </main>
+    <footer class="site-footer" id="footer">
+      <div class="footer-inner">
+        <div class="footer-main">
+          <a class="footer-brand" href="index.html"><img src="img/arise.png" alt="" width="44" height="44"><span><strong>A.R.I.S.E</strong><small>El club de tecnología de la UCJC</small></span></a>
+          <nav class="footer-nav" aria-label="Pie de página">
+            <a href="ateliers.html">Talleres</a>
+            <a href="meetings.html">Reuniones</a>
+            <a href="cafeteria.html">Cafetería</a>
+            <a href="mapa.html">Mapa</a>
+            <a href="join.html">Únete</a>
+          </nav>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/arise.ucjc/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://discord.gg/tuP7kjzKbM" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord" aria-hidden="true"></i></a>
+            <a href="https://chat.whatsapp.com/Fmw0Ku8y5hR3xY05tr7rLD" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="mailto:grupo.arise@ucjc.edu" aria-label="Correo: grupo.arise@ucjc.edu"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 A.R.I.S.E · Universidad Camilo José Cela</span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=C.+de+Juan+Hurtado+de+Mendoza,+4,+Madrid" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> C. de Juan Hurtado de Mendoza, 4, Madrid</a>
+          <a href="#">Volver arriba <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/2b7f4aa298.js" crossorigin="anonymous"></script>
+    <script type="module" src="js/nav.js"></script>
+    <script type="module" src="js/login.js"></script>
+  </body>
+</html>
