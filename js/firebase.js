@@ -13,11 +13,22 @@ export const app = initializeApp({
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
 export const ADMINS = "admin";
 export const MENUS = "canteen";
 export const ATELIERS = "ateliers";
 export const MEETINGS = "meetings";
 export const MAPS = "map";
+
+export const ATELIER_STATES = {
+  upcoming: "Próximamente",
+  active: "En curso",
+  finished: "Finalizado"
+};
+
+export const POSTRE = "Pieza de fruta, yogur, lácteos, tarta del día o café.";
+export const PRECIO_DEFECTO = "5,10";
+export const DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
 
 export let authCheckError = "";
 
@@ -37,6 +48,27 @@ export async function isAuthorized(uid) {
   }
 }
 
+export function authErrorText(code) {
+  switch (code) {
+    case "auth/invalid-email":
+      return "El correo electrónico no es válido.";
+    case "auth/user-disabled":
+      return "Esta cuenta ha sido deshabilitada.";
+    case "auth/user-not-found":
+    case "auth/wrong-password":
+    case "auth/invalid-credential":
+      return "Correo o contraseña incorrectos.";
+    case "auth/too-many-requests":
+      return "Demasiados intentos fallidos. Inténtalo más tarde.";
+    case "auth/popup-closed-by-user":
+      return "Cerraste la ventana de inicio de sesión.";
+    case "auth/account-exists-with-different-credential":
+      return "Ya existe una cuenta con este correo usando otro método de acceso.";
+    default:
+      return "Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo.";
+  }
+}
+
 export async function loadJson(path) {
   const res = await fetch(path, { cache: "no-cache" });
   if (!res.ok) throw new Error(`No se pudo cargar ${path}`);
@@ -46,10 +78,6 @@ export async function loadJson(path) {
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-
-export const POSTRE = "Pieza de fruta, yogur, lácteos, tarta del día o café.";
-export const PRECIO_DEFECTO = "5,10";
-export const DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
 
 export function toISODate(d) {
   const y = d.getFullYear();
@@ -67,4 +95,11 @@ export function addDays(s, n) {
   const d = fromISODate(s);
   d.setDate(d.getDate() + n);
   return toISODate(d);
+}
+
+export function mondayOf(isoDate) {
+  const d = fromISODate(isoDate);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return toISODate(new Date(d.setDate(diff)));
 }
