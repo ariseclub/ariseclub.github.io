@@ -17,7 +17,7 @@ let loading = 0;
 
 const platoOf = (data) => (data ? (data.plato || (data.primeros || []).join(", ")).trim() : "");
 const isFestivo = (plato) => /^festivo$/i.test(plato);
-const dayTitle = (s) => fromISODate(s).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }).replace(/^./, c => c.toUpperCase()).replace(/\bde\s+(\w)/, (_, p) => "de " + p.toUpperCase());
+const dayTitle = (s) => fromISODate(s).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }).replace(/^./, c => c.toUpperCase()).replace(/\bde\s+(\w)/, (_, p) => "de " + p.toUpperCase()) + ".";
 
 const chips = DAY_NAMES.map((name, i) => {
   const b = document.createElement("button");
