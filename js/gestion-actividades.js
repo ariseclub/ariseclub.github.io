@@ -3,8 +3,7 @@ import { db, ATELIERS, MEETINGS, ATELIER_STATES, loadJson, escapeHtml } from "./
 import { requireAdmin } from "./admin.js";
 
 const $ = (id) => document.getElementById(id);
-let currentEmail = "";
-
+let currentUid = "";
 const ICONS = [
   ["fa-solid fa-laptop-code", "Ordenador"],
   ["fa-solid fa-code", "Código"],
@@ -18,7 +17,6 @@ const ICONS = [
   ["fa-solid fa-lightbulb", "Idea"],
   ["fa-solid fa-gear", "Engranaje"]
 ];
-
 const KINDS = {
   ateliers: {
     collection: ATELIERS,
@@ -52,29 +50,28 @@ const KINDS = {
     ]
   }
 };
-
 let uid = 0;
 
 function fieldHtml(f, value, n) {
   const id = `f${n}-${f.key}`;
   const req = f.required ? " required" : "";
-  const hint = f.hint ? `<small class="field-hint">${escapeHtml(f.hint)}</small>` : "";
+  const hint = f.hint ? `<small class="hint">${escapeHtml(f.hint)}</small>` : "";
   const cls = `field${f.wide ? " field-wide" : ""}`;
   if (f.type === "checkbox") {
-    return `<label class="toggle ${cls}"><input id="${id}" name="${f.key}" type="checkbox"${value ? " checked" : ""}> ${f.label}</label>`;
+    return `<label class="${cls}"><input type="checkbox" name="${f.key}" ${value ? "checked" : ""}> ${f.label}</label>`;
   }
   let control;
   if (f.type === "textarea") {
-    control = `<textarea id="${id}" name="${f.key}" rows="4"${req}>${escapeHtml(value)}</textarea>`;
+    control = `<textarea name="${f.key}" ${req}>${escapeHtml(value)}</textarea>`;
   } else if (f.type === "select") {
-    const opts = f.options.map(([v, l]) => `<option value="${escapeHtml(v)}"${v === value ? " selected" : ""}>${escapeHtml(l)}</option>`).join("");
-    control = `<select id="${id}" name="${f.key}">${opts}</select>`;
-    if (f.icon) control = `<span class="icon-select"><i class="${escapeHtml(value)}" aria-hidden="true"></i>${control}</span>`;
+    const opts = f.options.map(([v, l]) => `<option value="${escapeHtml(v)}" ${v === value ? "selected" : ""}>${escapeHtml(l)}</option>`).join("");
+    control = `<select name="${f.key}" ${req}>${opts}</select>`;
+    if (f.icon) control = `<span class="icon-preview"><i class="${value}"></i></span>${control}`;
   } else {
     const ph = f.placeholder ? ` placeholder="${escapeHtml(f.placeholder)}"` : "";
-    control = `<input id="${id}" name="${f.key}" type="${f.type}" value="${escapeHtml(value)}"${ph}${req}>`;
+    control = `<input type="${f.type}" name="${f.key}" value="${escapeHtml(value)}" ${req}${ph}>`;
   }
-  return `<div class="${cls}"><label for="${id}">${f.label}</label>${control}${hint}</div>`;
+  return `<label class="${cls}">${f.label}${control}${hint}</label>`;
 }
 
 function readForm(kind, form) {
@@ -97,16 +94,17 @@ function buildCard(kind, item) {
   const form = document.createElement("form");
   form.className = "item-card";
   form.innerHTML = `
-    <div class="item-head">
+    <header class="item-head">
       <h3 class="item-title"></h3>
       <span class="item-badge" hidden>Sin guardar</span>
-    </div>
-    <div class="field-grid">${kind.fields.map((f) => fieldHtml(f, item[f.key] ?? "", n)).join("")}</div>
-    <div class="item-actions">
-      <button type="button" class="btn-secondary btn-danger" data-action="delete">Borrar</button>
-      <button type="submit">Guardar</button>
-    </div>
-    <p class="msg" role="status"></p>`;
+    </header>
+    ${kind.fields.map((f) => fieldHtml(f, item[f.key] ?? "", n)).join("")}
+    <footer class="item-actions">
+      <button type="button" class="danger" data-action="delete">Borrar</button>
+      <button type="submit" class="primary">Guardar</button>
+      <span class="msg" role="status"></span>
+    </footer>
+  `;
   let id = item.id || null;
   const title = form.querySelector(".item-title");
   const badge = form.querySelector(".item-badge");
@@ -128,7 +126,7 @@ function buildCard(kind, item) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    const data = { ...readForm(kind, form), updatedBy: currentEmail, updatedAt: serverTimestamp() };
+    const data = { ...readForm(kind, form), updatedBy: currentUid, updatedAt: serverTimestamp() };
     const save = form.querySelector('button[type="submit"]');
     save.disabled = true;
     msg.textContent = "Guardando…";
@@ -162,62 +160,13 @@ function buildCard(kind, item) {
 
 function updateEmpty(kind) {
   const list = $(kind.list);
-  list.nextElementSibling.hidden = list.children.length > 0;
-}
-
-async function loadKind(kind) {
-  const snap = await getDocs(collection(db, kind.collection));
-  const items = snap.docs.map((d) => ({ id: d.id, ...d.data() })).sort(kind.sort);
-  $(kind.list).replaceChildren(...items.map((it) => buildCard(kind, it)));
-  updateEmpty(kind);
-  return items.length;
-}
-
-async function loadAll() {
-  $("importBox").hidden = true;
-  try {
-    const counts = await Promise.all(Object.values(KINDS).map(loadKind));
-    $("importBox").hidden = counts.some((c) => c > 0);
-  } catch (e) {
-    console.error("[GESTIÓN] Error al cargar", e);
-    $("loadMsg").textContent = "No se pudo leer Firestore. Revisa las reglas de las colecciones ateliers y meetings.";
+  if (!list) return;
+  const empty = list.querySelector(".empty");
+  if (empty) empty.remove();
+  if (!list.querySelector(".item-card")) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = kind.nuevo === "Nuevo taller" ? "No hay talleres todavía." : "No hay reuniones todavía.";
+    list.append(p);
   }
 }
-
-document.querySelectorAll("[data-add]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const kind = KINDS[btn.dataset.add];
-    const card = buildCard(kind, kind.empty());
-    $(kind.list).prepend(card);
-    updateEmpty(kind);
-    card.querySelector("input, textarea").focus();
-  });
-});
-
-$("importBtn").addEventListener("click", async () => {
-  $("importBtn").disabled = true;
-  $("importMsg").textContent = "Importando…";
-  try {
-    const batch = writeBatch(db);
-    for (const kind of Object.values(KINDS)) {
-      const items = await loadJson(kind.json);
-      items.forEach((it) => batch.set(doc(collection(db, kind.collection)), { ...it, updatedBy: currentEmail, updatedAt: serverTimestamp() }));
-    }
-    await batch.commit();
-    await loadAll();
-  } catch (e) {
-    console.error("[GESTIÓN] Error al importar", e);
-    $("importMsg").textContent = e.code === "permission-denied" ? "Sin permiso para guardar. Revisa las reglas de Firestore." : "No se pudo importar.";
-  } finally {
-    $("importBtn").disabled = false;
-  }
-});
-
-window.addEventListener("beforeunload", (e) => {
-  if (document.querySelector(".item-card.is-dirty")) e.preventDefault();
-});
-
-requireAdmin().then((email) => {
-  currentEmail = email;
-  loadAll();
-});
