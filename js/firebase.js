@@ -60,7 +60,7 @@ export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-export const POSTRE = "Pieza de fruta, yogur, lácteos, tarta del día o café";
+export const POSTRE = "Pieza de fruta, yogur, lácteos, tarta del día o café.";
 export const PRECIO_DEFECTO = "5,10";
 
 export const DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
