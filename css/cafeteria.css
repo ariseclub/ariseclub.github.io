@@ -1,3 +1,4 @@
+#plato:not(:empty)::after {content: ".";}
 .hero { margin-bottom: 22px; }
 .hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
 .hero-top .eyebrow { margin: 0; }
