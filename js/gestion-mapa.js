@@ -5,7 +5,7 @@ import { isInterno, categoryColor, pinIcon, placeLatLng, coordsFromLatLng, creat
 
 const $ = (id) => document.getElementById(id);
 const form = $("placeForm");
-let currentEmail = "";
+let currentUid = "";
 let mapId = "externo";
 let data = null;
 let map = null;
@@ -19,12 +19,18 @@ let dirty = false;
 const setMsg = (id, text) => ($(id).textContent = text);
 
 function permissionText(e, action) {
-  return e.code === "permission-denied" ? `Sin permiso para ${action}. Revisa las reglas de Firestore.` : `No se pudo ${action}.`;
+  return e.code === "permission-denied"
+    ? `Sin permiso para ${action}. Revisa las reglas de Firestore.`
+    : `No se pudo ${action}.`;
 }
 
 async function saveMap() {
   const clean = JSON.parse(JSON.stringify(data));
-  await setDoc(doc(db, MAPS, mapId), { ...clean, updatedBy: currentEmail, updatedAt: serverTimestamp() });
+  await setDoc(doc(db, MAPS, mapId), {
+    ...clean,
+    updatedBy: currentUid,
+    updatedAt: serverTimestamp()
+  });
   delete data.updatedAt;
   setSource(true);
 }
@@ -46,7 +52,7 @@ function categoriesWithOthers() {
 
 function fillCategorySelect(value) {
   const sel = form.elements.category;
-  sel.innerHTML = categoriesWithOthers().map((n) => `<option>${escapeHtml(n)}</option>`).join("") + `<option value="">Otros</option>`;
+  sel.innerHTML = categoriesWithOthers().map((n) => `${escapeHtml(n)}`).join("") + `Otros`;
   sel.value = value || "";
 }
 
@@ -70,12 +76,15 @@ function renderList() {
     .map((p, i) => ({ p, i }))
     .filter(({ p }) => `${p.name} ${p.category || ""} ${p.floor || ""}`.toLowerCase().includes(q))
     .sort((a, b) => (a.p.name || "").localeCompare(b.p.name || "", "es"));
-  $("placeList").replaceChildren(...items.map(({ p, i }) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<button type="button" class="place-item${i === selected ? " is-active" : ""}"><span class="place-title"><span class="chip-dot" style="background:${escapeHtml(categoryColor(data, p.category))}"></span>${escapeHtml(p.name || "Sin nombre")}</span><span class="place-desc">${escapeHtml([p.category, p.floor].filter(Boolean).join(" · "))}</span></button>`;
-    li.querySelector("button").addEventListener("click", () => selectPlace(i));
-    return li;
-  }));
+
+  $("placeList").replaceChildren(
+    ...items.map(({ p, i }) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${escapeHtml(p.name || "Sin nombre")}${escapeHtml([p.category, p.floor].filter(Boolean).join(" · "))}`;
+      li.querySelector("button").addEventListener("click", () => selectPlace(i));
+      return li;
+    })
+  );
   $("placeCount").textContent = `${data.places.length} lugares`;
 }
 
@@ -116,7 +125,9 @@ function setFloor(id, recenter = true) {
   if (!showFloor(map, data, id)) return;
   currentFloor = id;
   floors.refresh();
-  if (recenter) map.setView([data.imageSize.height / 2, data.imageSize.width / 2], map.baseZoom);
+  if (recenter) {
+    map.setView([data.imageSize.height / 2, data.imageSize.width / 2], map.baseZoom);
+  }
   renderMarkers();
   placeDraft();
 }
@@ -157,17 +168,13 @@ function setupForm() {
   form.elements.c1.step = interno ? "1" : "any";
   $("floorField").hidden = !interno;
   $("googleField").hidden = interno;
-  form.elements.floor.innerHTML = (data.floors || []).map((f) => `<option value="${escapeHtml(f.id)}">${escapeHtml(f.name || f.id)}</option>`).join("");
+  form.elements.floor.innerHTML = (data.floors || []).map((f) => `${escapeHtml(f.name || f.id)}`).join("");
   form.hidden = true;
 }
 
-form.addEventListener("input", (e) => {
-  dirty = true;
-  if (["c0", "c1", "category", "floor"].includes(e.target.name)) {
-    if (e.target.name === "floor" && isInterno(data) && e.target.value !== currentFloor) setFloor(e.target.value, false);
-    placeDraft();
-  }
-});
+form.elements.c0.addEventListener("input", () => { dirty = true; placeDraft(); });
+form.elements.c1.addEventListener("input", () => { dirty = true; placeDraft(); });
+form.elements.category.addEventListener("change", () => { dirty = true; placeDraft(); });
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -185,10 +192,12 @@ form.addEventListener("submit", async (e) => {
   };
   if (isInterno(data)) place.floor = form.elements.floor.value;
   else if (form.elements.googleUrl.value.trim()) place.googleUrl = form.elements.googleUrl.value.trim();
+
   const backup = data.places.slice();
   if (selected >= 0) data.places[selected] = place;
   else data.places.push(place);
   const index = selected >= 0 ? selected : data.places.length - 1;
+
   $("saveBtn").disabled = true;
   setMsg("placeMsg", "Guardando…");
   try {
@@ -244,10 +253,7 @@ $("placeSearch").addEventListener("input", renderList);
 function categoryRow(c = { name: "", color: "#a855f7" }) {
   const row = document.createElement("div");
   row.className = "category-row";
-  row.innerHTML = `
-    <input type="color" value="${escapeHtml(c.color)}" aria-label="Color">
-    <input type="text" value="${escapeHtml(c.name)}" placeholder="Nombre" aria-label="Nombre de la categoría" required>
-    <button type="button" class="btn-secondary btn-small" aria-label="Quitar categoría">Quitar</button>`;
+  row.innerHTML = `<input type="text" value="${escapeHtml(c.name)}"><input type="color" value="${c.color}"><button type="button">Quitar</button>`;
   row.querySelector("button").addEventListener("click", () => row.remove());
   return row;
 }
@@ -264,7 +270,13 @@ $("addCategoryBtn").addEventListener("click", () => {
 
 $("saveCategoriesBtn").addEventListener("click", async () => {
   const rows = [...$("categoryRows").children];
-  const cats = rows.map((r) => ({ name: r.querySelector('input[type="text"]').value.trim(), color: r.querySelector('input[type="color"]').value })).filter((c) => c.name);
+  const cats = rows
+    .map((r) => ({
+      name: r.querySelector('input[type="text"]').value.trim(),
+      color: r.querySelector('input[type="color"]').value
+    }))
+    .filter((c) => c.name);
+
   const backup = data.categories;
   data.categories = cats;
   setMsg("categoryMsg", "Guardando…");
@@ -307,12 +319,14 @@ async function loadEditor(id) {
   floors = null;
   ["listMsg", "categoryMsg", "centerMsg", "placeMsg"].forEach((m) => setMsg(m, ""));
   document.querySelectorAll("[data-map]").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.map === id)));
+
   if (map) {
     map.remove();
     map = null;
   }
   $("editorBody").hidden = true;
   setMsg("sourceMsg", "Cargando…");
+
   let inFirestore = false;
   try {
     const snap = await getDoc(doc(db, MAPS, id));
@@ -327,18 +341,21 @@ async function loadEditor(id) {
     setMsg("sourceMsg", "No se pudo leer Firestore. Revisa las reglas de la colección map.");
     return;
   }
+
   delete data.updatedAt;
   delete data.updatedBy;
   data.places = data.places || [];
   data.categories = data.categories || [];
   setSource(inFirestore);
   $("editorBody").hidden = false;
+
   setupForm();
   map = createMap("map", data);
   map.on("click", (e) => {
     if (form.hidden) selectPlace(-1);
     setCoords(e.latlng);
   });
+
   if (isInterno(data)) {
     floors = floorControl(data, () => currentFloor, (f) => setFloor(f));
     map.addControl(floors);
@@ -348,6 +365,7 @@ async function loadEditor(id) {
   } else {
     currentFloor = null;
   }
+
   renderMarkers();
   renderList();
   renderCategories();
@@ -364,7 +382,7 @@ window.addEventListener("beforeunload", (e) => {
   if (dirty) e.preventDefault();
 });
 
-requireAdmin().then((email) => {
-  currentEmail = email;
+requireAdmin().then((uid) => {
+  currentUid = uid;
   loadEditor(new URLSearchParams(location.search).get("mapa") === "interno" ? "interno" : "externo");
 });
