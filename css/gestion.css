@@ -71,6 +71,17 @@ pre { white-space: pre-wrap; font-size: 0.82rem; color: var(--muted); }
 .tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); }
 .app .tabs button { padding: 8px 18px; border-radius: 999px; background: none; box-shadow: none; color: var(--muted); }
 .app .tabs button[aria-selected="true"] { background: var(--primary-color); color: #fff; }
+.members-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.app .members-search { flex: 1 1 220px; max-width: 340px; }
+.tab-count { display: inline-block; min-width: 1.6em; margin-left: 4px; padding: 0 7px; border-radius: 999px; background: #ffffff1f; font-size: .78rem; text-align: center; }
+.member-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+.member-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px 16px; padding: 14px 16px; border-radius: 16px; background: #0000002e; border: 1px solid var(--border); }
+.member-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.member-info strong { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: #fff; font-family: var(--font-primary); overflow-wrap: anywhere; }
+.member-info a { color: var(--lilac); font-size: .9rem; overflow-wrap: anywhere; }
+.member-info small { color: var(--muted); font-size: .82rem; }
+.member-actions { display: flex; gap: 8px; }
+.member-row .msg { grid-column: 1 / -1; margin-top: 0; font-size: .85rem; }
 .map-head h1 { font-size: clamp(1.8rem,5vw,2.6rem); color: #fff; }
 .source-msg { margin-bottom: 14px; color: var(--muted); }
 .source-msg.is-warning { padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--orange); background: #ff8c4214; color: #ffd2b0; }
@@ -114,6 +125,9 @@ details.panel[open] > summary { margin-bottom: 12px; }
 }
 @media (max-width: 560px) {
   .field-grid { grid-template-columns: 1fr; }
+  .member-row { grid-template-columns: 1fr; }
+  .member-actions button { flex: 1; }
+  .app .members-search { max-width: none; }
   .userbar { flex-wrap: wrap; }
   .userbar-actions { width: 100%; justify-content: space-between; }
 }

@@ -1,15 +1,25 @@
 import { GoogleAuthProvider, OAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import { auth, ADMINS, emailOf, isAuthorized, authErrorText } from "./firebase.js";
+import { auth, ADMINS, isAuthorized, authCheckError, authErrorText } from "./firebase.js";
 
-const PAGES = ["gestion.html", "gestion-cafeteria.html", "gestion-actividades.html", "gestion-mapa.html"];
+const PAGES = ["gestion.html", "gestion-cafeteria.html", "gestion-actividades.html", "gestion-mapa.html", "gestion-miembros.html"];
+const KNOWN_ERRORS = ["no-existe", "permission-denied", "sin-uid"];
 const params = new URLSearchParams(location.search);
 const next = PAGES.includes(params.get("next")) ? params.get("next") : "gestion.html";
 
 const msg = document.getElementById("loginMsg");
 const buttons = [document.getElementById("googleBtn"), document.getElementById("microsoftBtn")];
 
+function errorText(code, uid) {
+  const path = `${ADMINS}/${uid || "tu UID"}`;
+  if (code === "no-existe") return `Tu cuenta no está autorizada. Para darle acceso hay que crear en Firestore el documento ${path}.`;
+  if (code === "permission-denied") return `Firestore no deja leer ${path}. Revisa la regla de la colección ${ADMINS}.`;
+  if (code === "sin-uid") return "No se pudo leer tu cuenta.";
+  return "No se pudo comprobar si tu cuenta está autorizada.";
+}
+
 if (params.get("error") === "no-autorizado") {
-  msg.textContent = params.get("motivo") || "Ese correo no está autorizado para entrar en la gestión.";
+  const code = params.get("motivo");
+  msg.textContent = errorText(KNOWN_ERRORS.includes(code) ? code : "");
 }
 
 function createProvider(type) {
@@ -29,19 +39,16 @@ function createProvider(type) {
 }
 
 async function checkUser(user) {
-  const email = emailOf(user);
-  const token = await user.getIdTokenResult().catch(() => null);
-  const tokenEmail = (token && token.claims.email) || null;
-  console.log("[AUTH] request.auth.token.email:", tokenEmail);
-  console.log("[AUTH] Documento que se busca:", `${ADMINS}/${email}`);
-  if (!tokenEmail) console.warn("[AUTH] El token no trae correo, así que la regla de admin no te deja leer el documento");
-  else if (tokenEmail.toLowerCase() !== email) console.warn(`[AUTH] El correo del token (${tokenEmail.toLowerCase()}) no coincide con el documento que se busca, así que la regla de admin no te deja leerlo`);
-  if (await isAuthorized(email)) {
+  const uid = user.uid;
+  console.log("[AUTH] request.auth.uid:", uid);
+  console.log("[AUTH] Documento que se busca:", `${ADMINS}/${uid}`);
+  if (await isAuthorized(uid)) {
     window.location.replace(`./${next}`);
     return;
   }
+  const code = authCheckError;
   await signOut(auth);
-  msg.textContent = authErrorText(email || "(desconocido)");
+  msg.textContent = errorText(code, uid);
   buttons.forEach((b) => (b.disabled = false));
 }
 
@@ -58,7 +65,7 @@ async function handleAuth(type) {
     } else if (e.code === "auth/popup-closed-by-user") {
       msg.textContent = "Has cerrado la ventana antes de terminar.";
     } else {
-      msg.textContent = e.code === "auth/account-exists-with-different-credential" ? "Ese correo ya entró antes con otro proveedor. Usa el mismo botón (Google o Microsoft) que la primera vez." : `No se pudo iniciar sesión (${e.code || "error"}).`;
+      msg.textContent = e.code === "auth/account-exists-with-different-credential" ? "Ese correo ya entró antes con otro proveedor. Usa el mismo botón (Google o Microsoft) que la primera vez." : authErrorText(e.code);
     }
   }
 }

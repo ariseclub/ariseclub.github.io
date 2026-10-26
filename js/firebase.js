@@ -19,11 +19,14 @@ export const MENUS = "canteen";
 export const ATELIERS = "ateliers";
 export const MEETINGS = "meetings";
 export const MAPS = "map";
+export const USERS = "users";
+export const TEMPUSERS = "tempusers";
 
 export const ATELIER_STATES = {
-  upcoming: "Próximamente",
   active: "En curso",
-  finished: "Finalizado"
+  upcoming: "Próximamente",
+  completed: "Completado",
+  paused: "En pausa"
 };
 
 export const POSTRE = "Pieza de fruta, yogur, lácteos, tarta del día o café.";
@@ -97,9 +100,17 @@ export function addDays(s, n) {
   return toISODate(d);
 }
 
-export function mondayOf(isoDate) {
-  const d = fromISODate(isoDate);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  return toISODate(new Date(d.setDate(diff)));
+export function mondayOf(s) {
+  const wd = fromISODate(s).getDay();
+  return addDays(s, wd === 0 ? 1 : wd === 6 ? 2 : 1 - wd);
+}
+
+export function formatLongDate(s) {
+  return fromISODate(s).toLocaleDateString("es-ES", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric"
+  });
+}
+
+export function formatDate(s) {
+  return fromISODate(s).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
 }
