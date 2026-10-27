@@ -78,6 +78,9 @@ pre { white-space: pre-wrap; font-size: 0.82rem; color: var(--muted); }
 .member-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px 16px; padding: 14px 16px; border-radius: 16px; background: #0000002e; border: 1px solid var(--border); }
 .member-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .member-info strong { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: #fff; font-family: var(--font-primary); overflow-wrap: anywhere; }
+.member-name { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; }
+.member-name span { color: var(--muted); font-size: .8rem; }
+.app .member-name input { width: 100%; max-width: 360px; padding: 8px 12px; font-family: var(--font-primary); font-weight: 600; color: #fff; }
 .member-info a { color: var(--lilac); font-size: .9rem; overflow-wrap: anywhere; }
 .member-info small { color: var(--muted); font-size: .82rem; }
 .member-actions { display: flex; gap: 8px; }

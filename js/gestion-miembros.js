@@ -52,9 +52,12 @@ function rowHtml(item, isPending) {
         <button type="button" data-action="accept"${isMember ? " disabled" : ""}>Aceptar</button>
       </div>`
     : "";
+  const nameHtml = isPending && !isMember
+    ? `<label class="member-name"><span>Nombre con el que se añade</span><input type="text" value="${escapeHtml(item.newName ?? item.name ?? "")}" maxlength="120" placeholder="Nombre" autocomplete="off"></label>`
+    : `<strong>${escapeHtml(item.name || "Sin nombre")}${isMember ? ' <span class="item-badge">Ya es miembro</span>' : ""}</strong>`;
   return `
     <div class="member-info">
-      <strong>${escapeHtml(item.name || "Sin nombre")}${isMember ? ' <span class="item-badge">Ya es miembro</span>' : ""}</strong>
+      ${nameHtml}
       <a href="mailto:${escapeHtml(item.id)}">${escapeHtml(item.id)}</a>
       <small>${dates}</small>
     </div>
@@ -64,21 +67,28 @@ function rowHtml(item, isPending) {
 
 async function accept(item, li) {
   const msg = li.querySelector(".msg");
-  li.querySelectorAll("button").forEach((b) => (b.disabled = true));
+  const input = li.querySelector(".member-name input");
+  const name = (item.newName ?? item.name ?? "").trim();
+  if (!name) {
+    msg.textContent = "Escribe el nombre con el que se añade.";
+    input.focus();
+    return;
+  }
+  li.querySelectorAll("button, input").forEach((b) => (b.disabled = true));
   msg.textContent = "Aceptando…";
   try {
-    const data = { name: item.name || "", approved_at: serverTimestamp() };
+    const data = { name, approved_at: serverTimestamp() };
     if (item.joined_at) data.joined_at = item.joined_at;
     const batch = writeBatch(db);
     batch.set(doc(db, USERS, item.id), data);
     batch.delete(doc(db, TEMPUSERS, item.id));
     await batch.commit();
     pending = pending.filter((p) => p !== item);
-    members.push({ id: item.id, name: item.name || "", joined_at: item.joined_at || null, approved_at: new Date() });
+    members.push({ id: item.id, name, joined_at: item.joined_at || null, approved_at: new Date() });
     render();
   } catch (e) {
     console.error("[MIEMBROS] Error al aceptar", e);
-    li.querySelectorAll("button").forEach((b) => (b.disabled = false));
+    li.querySelectorAll("button, input").forEach((b) => (b.disabled = false));
     msg.textContent = e.code === "permission-denied" ? "Sin permiso para aceptar. Revisa las reglas de Firestore de users y tempusers." : "No se pudo aceptar la solicitud.";
   }
 }
@@ -105,6 +115,13 @@ function renderList(key, items, isPending) {
     li.className = "member-row";
     li.innerHTML = rowHtml(item, isPending);
     if (isPending) {
+      const input = li.querySelector(".member-name input");
+      if (input) {
+        input.addEventListener("input", () => (item.newName = input.value));
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") accept(item, li);
+        });
+      }
       li.querySelector('[data-action="accept"]').addEventListener("click", () => accept(item, li));
       li.querySelector('[data-action="reject"]').addEventListener("click", () => reject(item, li));
     }
