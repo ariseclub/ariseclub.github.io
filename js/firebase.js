@@ -21,6 +21,7 @@ export const MEETINGS = "meetings";
 export const MAPS = "map";
 export const USERS = "users";
 export const TEMPUSERS = "tempusers";
+export const PROPOSALS = "map_proposals";
 
 export const ATELIER_STATES = {
   active: "En curso",

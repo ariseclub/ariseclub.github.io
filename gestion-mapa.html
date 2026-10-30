@@ -50,6 +50,14 @@
           <p id="sourceMsg" class="source-msg" role="status"></p>
           <div id="editorBody" class="map-editor" hidden>
             <div class="map-editor-side">
+              <div id="proposalPanel" class="panel panel-notice" hidden>
+                <div class="section-head">
+                  <h2>Propuestas <small id="proposalCount"></small></h2>
+                </div>
+                <p class="hint">Sitios que ha mandado la gente. Pulsa uno para revisarlo, cambiar lo que haga falta y aprobarlo o rechazarlo.</p>
+                <ul id="proposalList" class="places-list admin-places"></ul>
+                <p id="proposalMsg" class="msg" role="status"></p>
+              </div>
               <div class="panel">
                 <div class="section-head">
                   <h2>Lugares <small id="placeCount"></small></h2>
@@ -61,6 +69,7 @@
               </div>
               <form id="placeForm" class="panel" hidden>
                 <h2 id="formTitle">Nuevo lugar</h2>
+                <p id="formMeta" class="form-meta" hidden></p>
                 <p class="hint">Pulsa en el mapa donde está el lugar o arrastra el punto blanco.</p>
                 <div class="field-grid">
                   <div class="field field-wide"><label for="pName">Nombre</label><input id="pName" name="name" type="text" required></div>
@@ -87,7 +96,17 @@
                 </div>
                 <p id="categoryMsg" class="msg" role="status"></p>
               </details>
-              <details class="panel">
+              <details id="campusPanel" class="panel" hidden>
+                <summary>Campus</summary>
+                <p class="hint">El primero es el principal, el que se ve al abrir el mapa. Si hay más de uno, en la web sale un selector para cambiar de campus.</p>
+                <div id="campusRows" class="campus-rows"></div>
+                <div class="item-actions">
+                  <button id="addCampusBtn" type="button" class="btn-secondary">Añadir campus aquí</button>
+                  <button id="saveCampusBtn" type="button">Guardar campus</button>
+                </div>
+                <p id="campusMsg" class="msg" role="status"></p>
+              </details>
+              <details id="viewPanel" class="panel">
                 <summary>Vista Inicial</summary>
                 <p class="hint">Mueve y acerca el mapa hasta dejarlo como quieres que se vea al abrir la página, y pulsa el botón.</p>
                 <button id="centerBtn" type="button" class="btn-secondary">Usar la Vista Actual</button>

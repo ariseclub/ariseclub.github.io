@@ -1,6 +1,7 @@
 import { loadMap } from "./data.js";
 import { escapeHtml } from "./firebase.js";
-import { isInterno, categoryColor, pinIcon, placeLatLng, directionsUrl, createMap, showFloor, floorControl } from "./map-core.js";
+import { isInterno, categoryColor, pinIcon, placeLatLng, directionsUrl, createMap, showFloor, floorControl, campusesOf, campusControl } from "./map-core.js";
+import { setupProposals } from "./mapa-propuestas.js";
 
 const MAP_ID = document.body.dataset.mapa;
 const search = document.getElementById("search");
@@ -141,10 +142,27 @@ async function main() {
     map.addControl(floors);
     setFloor((data.center && data.center.floor) || data.floors[0].id);
   } else {
-    L.marker(placeLatLng(data, data.center), { icon: pinIcon(data.defaultColor || "#a855f7", { center: true }), title: data.center.name })
-      .addTo(map)
-      .bindPopup(`<strong>${escapeHtml(data.center.name)}</strong><br>${escapeHtml(data.center.description)}`);
+    const campuses = campusesOf(data);
+    const pins = {};
+    campuses.forEach((c) => {
+      pins[c.id] = L.marker(placeLatLng(data, c), { icon: pinIcon(data.defaultColor || "#a855f7", { center: true }), title: c.name, zIndexOffset: 500 })
+        .addTo(map)
+        .bindPopup(`<strong>${escapeHtml(c.name)}</strong><br>${escapeHtml(c.description)}`);
+    });
+    const goToCampus = (id) => {
+      const campus = campuses.find((c) => c.id === id) || campuses[0];
+      map.setView(placeLatLng(data, campus), campus.zoom || map.baseZoom);
+      pins[campus.id].openPopup();
+      const url = new URL(location.href);
+      if (campus === campuses[0]) url.searchParams.delete("campus");
+      else url.searchParams.set("campus", campus.id);
+      history.replaceState(null, "", url);
+    };
+    const wanted = campuses.find((c) => c.id === new URLSearchParams(location.search).get("campus"));
+    if (campuses.length > 1) map.addControl(campusControl(campuses, (wanted || campuses[0]).id, goToCampus));
+    if (wanted && wanted !== campuses[0]) goToCampus(wanted.id);
     apply();
+    setupProposals(map, data);
   }
 }
 

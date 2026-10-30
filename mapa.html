@@ -36,6 +36,32 @@
         <input id="search" class="map-search" type="search" placeholder="Buscar lugar…" aria-label="Buscar lugar">
         <div id="filters" class="filters" aria-label="Categorías"></div>
         <ul id="places-list" class="places-list"></ul>
+        <button id="proposeBtn" type="button" class="propose-btn"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Proponer un sitio</button>
+        <section id="proposePanel" class="propose-panel" aria-labelledby="proposeTitle" hidden>
+          <div class="propose-head">
+            <h2 id="proposeTitle">Proponer un sitio</h2>
+            <button id="proposeClose" type="button" class="propose-close" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+          </div>
+          <div id="proposeLogin" class="propose-login" hidden>
+            <p>Para proponer un sitio tienes que entrar con tu cuenta. Lo revisamos antes de publicarlo.</p>
+            <button type="button" class="propose-submit" data-provider="google">Continuar con Google</button>
+            <button type="button" class="propose-submit propose-alt" data-provider="microsoft">Continuar con Microsoft</button>
+          </div>
+          <form id="proposeForm" class="propose-form" hidden>
+            <p class="propose-user">Conectado como <strong id="proposeUser"></strong> · <button id="proposeLogout" type="button" class="link-btn">Salir</button></p>
+            <label>Nombre<input name="name" type="text" maxlength="120" required></label>
+            <label>Categoría<select name="category"></select></label>
+            <label>Descripción<textarea name="description" rows="3" maxlength="600"></textarea></label>
+            <label>Enlace de Google Maps<input name="googleUrl" type="url" maxlength="600" placeholder="https://www.google.com/maps/place/…"></label>
+            <p class="propose-hint">Pulsa en el mapa donde está el sitio o pega su enlace de Google Maps.</p>
+            <div class="propose-coords">
+              <label>Latitud<input name="lat" type="number" step="any" min="-90" max="90" required></label>
+              <label>Longitud<input name="lng" type="number" step="any" min="-180" max="180" required></label>
+            </div>
+            <button type="submit" class="propose-submit">Enviar propuesta</button>
+          </form>
+          <p id="proposeMsg" class="msg" role="status"></p>
+        </section>
       </aside>
       <div id="map" role="region" aria-label="Mapa"></div>
     </main>

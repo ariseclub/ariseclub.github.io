@@ -101,6 +101,16 @@ details.panel[open] > summary { margin-bottom: 12px; }
 .app .place-item { width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: #0000002e; box-shadow: none; color: var(--text); font-family: var(--font-secondary); font-weight: 400; text-align: left; }
 .app .place-item:hover:not(:disabled), .app .place-item.is-active { transform: none; filter: none; background: var(--surface-hover); border-color: var(--border-strong); }
 .app .place-item.is-active { border-color: var(--violet); }
+.form-meta { margin: -4px 0 12px; color: #ffd2b0; font-size: .88rem; }
+.empty-note { padding: 10px 12px; color: var(--muted); font-size: .9rem; }
+.campus-rows { display: flex; flex-direction: column; gap: 10px; }
+.campus-row { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 16px; background: #0000002e; border: 1px solid var(--border); }
+.campus-row-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.campus-coords { color: var(--muted); font-size: .8rem; }
+.app .campus-row input { width: 100%; min-width: 0; }
+.campus-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.app .campus-row .btn-small { padding: 6px 12px; font-size: .8rem; }
+.admin-card h2 .item-badge { margin-left: 6px; vertical-align: middle; background: #ff8c4233; color: #ffd2b0; font-family: var(--font-secondary); font-weight: 400; }
 @media (max-width: 640px) {
   .userbar { flex-wrap: nowrap; margin-bottom: 14px; font-size: 0.9rem; }
   .userbar > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
