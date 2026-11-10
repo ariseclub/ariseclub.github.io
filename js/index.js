@@ -30,7 +30,7 @@ if (today.getDay() === 0 || today.getDay() === 6) {
       $("homeCanteenText").textContent = "La universidad no está abierta";
     } else if (plato) {
       $("homeCanteen").textContent = plato;
-      $("homeCanteenText").textContent = `Plato del día · ${snap.data().precio || "5,10"} €`;
+      $("homeCanteenText").textContent = `Plato del día · ${snap.data().precio || "5,30"} €`;
     }
   }).catch(() => {});
 }
